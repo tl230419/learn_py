@@ -1,3 +1,10 @@
+'''
+*****************
+Date: 2020-04-13
+Author: Allen
+*****************
+'''
+
 namesList = ['林青霞','张曼玉','胡慧中']
 name = namesList[1]
 print(name)

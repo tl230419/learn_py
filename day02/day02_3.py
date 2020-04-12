@@ -1,3 +1,10 @@
+'''
+*****************
+Date: 2020-04-13
+Author: Allen
+*****************
+'''
+
 str = 'hello world'
 for ele in str:
     print(ele)
