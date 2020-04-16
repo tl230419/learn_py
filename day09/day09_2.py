@@ -24,6 +24,8 @@ pygame.display.set_icon(icon_surface)
 bg_surface = pygame.image.load('img/img_bg_level_1.jpg')
 hero_surface = pygame.image.load('img/hero2.png')
 
+sn = pygame.mixer.Sound('snd/bomb.wav')
+
 class Plane:
     def __init__(self, x, y, window):
         self.x = x
@@ -46,16 +48,17 @@ class Plane:
                 break
 
         for bullet in self.bullets:
+            if bullet.need_destroy():
+                print('需要销毁')
+                self.bullets.remove(bullet)
+
+        for bullet in self.bullets:
             for enemy in enemy_list:
                 if bullet.has_collision(enemy):
                     self.bullets.remove(bullet)
                     enemy.reset()
+                    sn.play(loops=1)
                     break
-
-        for bullet in self.bullets:
-            if bullet.need_destroy():
-                print('需要销毁')
-                self.bullets.remove(bullet)
 
         for bullet in self.bullets:
             bullet.display()
@@ -128,7 +131,7 @@ class EnemyPlane:
             self.reset()
 
         if not game_over:
-            self.y += 1
+            self.y += 0.3#1
 
     def reset(self):
         self.window = window
@@ -183,4 +186,3 @@ while True:
                 plane.move_down()
             elif event.key == K_RETURN:
                 plane.fire()
-
