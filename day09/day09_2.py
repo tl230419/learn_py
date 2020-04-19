@@ -9,6 +9,7 @@ import pygame
 from pygame.locals import *
 import sys
 import random
+import os
 
 pygame.init()
 
@@ -18,20 +19,25 @@ window_h = 476
 window = pygame.display.set_mode(size=(window_w, window_h))
 pygame.display.set_caption('飞机大战')
 
-icon_surface = pygame.image.load('img/app.ico')
+# Get full path, use for multi plaforms
+curr_path = os.path.dirname(__file__)
+img_path = os.path.join(curr_path, 'img')
+snd_path = os.path.join(curr_path, 'snd')
+
+icon_surface = pygame.image.load(os.path.join(img_path, 'app.ico'))
 pygame.display.set_icon(icon_surface)
 
-bg_surface = pygame.image.load('img/img_bg_level_1.jpg')
-hero_surface = pygame.image.load('img/hero2.png')
-
-sn = pygame.mixer.Sound('snd/bomb.wav')
+bg_surface = pygame.image.load(os.path.join(img_path, 'img_bg_level_1.jpg'))
+hero_surface = pygame.image.load(os.path.join(img_path, 'hero2.PNG'))
+bullet_surface = pygame.image.load(os.path.join(img_path, 'bullet.png'))
+sn = pygame.mixer.Sound(os.path.join(snd_path, 'bomb.wav'))
 
 class Plane:
     def __init__(self, x, y, window):
         self.x = x
         self.y = y
         self.window = window
-        self.surface = pygame.image.load('img/hero2.png')
+        self.surface = hero_surface
         self.width = self.surface.get_width()
         self.height = self.surface.get_height()
         self.bullets = []
@@ -94,7 +100,7 @@ class Plane:
 
 class Bullet:
     def __init__(self, window, px, py, pw):
-        self.surface = pygame.image.load('img/bullet.png')
+        self.surface = bullet_surface
         self.width = self.surface.get_width()
         self.height = self.surface.get_height()
         self.window = window
@@ -118,7 +124,7 @@ class Bullet:
 class EnemyPlane:
     def __init__(self, window):
         self.window = window
-        self.surface = pygame.image.load('img/img_plane_1.png')
+        self.surface = pygame.image.load(os.path.join(img_path, 'img_plane_1.PNG'))
         self.width = self.surface.get_width()
         self.height = self.surface.get_height()
         self.x = 100
@@ -135,7 +141,7 @@ class EnemyPlane:
 
     def reset(self):
         self.window = window
-        self.surface = pygame.image.load('img/img_plane_{}.png'.format(random.randint(1, 7)))
+        self.surface = pygame.image.load(os.path.join(img_path, 'img_plane_{}.PNG'.format(random.randint(1, 7))))
         self.width = self.surface.get_width()
         self.height = self.surface.get_height()
         self.x = random.randint(0, window_w - self.width)

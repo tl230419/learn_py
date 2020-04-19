@@ -179,16 +179,21 @@ import pygame
 from pygame.locals import *
 import sys
 import time
+import os
 
 pygame.init()
 
 window = pygame.display.set_mode(size=(800, 800))
 pygame.display.set_caption('飞机大战')
 
-icon = pygame.image.load('img/app.ico')
+# Get full path, use for multi plaforms
+curr_path = os.path.dirname(__file__)
+img_path = os.path.join(curr_path, 'img')
+
+icon = pygame.image.load(os.path.join(img_path, 'app.ico'))
 pygame.display.set_icon(icon)
 
-hero_img = pygame.image.load('img/hero2.png')
+hero_img = pygame.image.load(os.path.join(img_path, 'hero2.PNG'))
 
 hero_x = 200
 hero_y = 200
